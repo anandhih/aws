@@ -1,0 +1,178 @@
+- create spring boot starter Project
+
+- add simple controller
+
+- add application properties with port and context-path
+
+- run and test raw spring boot -> http://localhost:8020/exp/controller/index
+
+- add docker file with base image needed, added application jar on top, run it, expose it in a port.
+
+----------------------------
+basic docker commands
+----------------------------
+
+- docker -v
+- docker login
+- docker images
+- docker ps -a
+- docker push
+- docker remove
+- docker build imagename
+- docker system prune --volumes
+- docker container ls -a  / docker volume rm 45445kkljhklhljhj4545 / docker image prune -a --filter "until=12h"
+- docker image ls
+
+-----------------------------
+
+On build image and tag image to the given name, the below LOG 1 generated
+- docker build -t aharida/spring-boot-docker .
+
+check status image. it should contain the tagged image name
+- docker images
+
+assign the docker port to someother port in computer (for example computer usese that port already that it need to be
+assigned other port) See LOG 3
+- docker run 8500:8080 aharida/spring-boot-docker
+
+in Local check the url ->
+- http://localhost:8020/exp/controller/index
+
+to show all running container status see process status
+- docker ps -a
+
+login in docker
+- username: aharidas
+- password : ********
+
+push the created docker image to docker hub for later use. see LOG 2
+- docker push aharida/spring-boot-docker
+
+https://cloud.docker.com/u/aharida/repository/docker/aharida/aharida
+-----------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------
+LOG 1
+------------------------------
+
+$ docker build -t aharida/spring-boot-docker .
+Sending build context to Docker daemon     17MB
+Step 1/7 : FROM openjdk:8-jdk-alpine
+ ---> ece449e0acb8
+Step 2/7 : LABEL maintainer="anandhih@gmail.com"
+ ---> Using cache
+ ---> fee96ccb4768
+Step 3/7 : VOLUME /tmp
+ ---> Using cache
+ ---> 26450e1afc5d
+Step 4/7 : ARG JAR_FILE=target/springboot-docker-0.0.1-SNAPSHOT.jar
+ ---> Using cache
+ ---> 2d7286bc3c04
+Step 5/7 : ADD ${JAR_FILE} app.jar
+ ---> 38e1826cf880
+Step 6/7 : ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ ---> Running in a397e10c0ff5
+Removing intermediate container a397e10c0ff5
+ ---> 964dbae7e558
+Step 7/7 : EXPOSE 8080
+ ---> Running in 99e83c5f9e7f
+Removing intermediate container 99e83c5f9e7f
+ ---> 4102b18310ef
+Successfully built 4102b18310ef
+Successfully tagged aharida/spring-boot-docker:latest
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset perm
+issions for sensitive files and directories.
+
+----------------------------------------------------
+
+
+----------------------------------------------------
+            LOG 2
+----------------------------------------------------
+
+$ docker push aharida/spring-boot-docker
+The push refers to repository [docker.io/aharida/spring-boot-docker]
+c6a08d9cd4d9: Pushed
+560e8fc5dfa2: Mounted from library/openjdk
+dee6aef5c2b6: Mounted from library/openjdk
+a464c54f93a9: Mounted from library/openjdk
+latest: digest: sha256:13993b8d10cb707c5d0a25c0a2753d86ac6323caf6ae5c553d40ac102276bdba size: 1159
+
+
+
+----------------------------------------------------
+
+
+----------------------------------------------------
+        LOG 3
+----------------------------------------------------
+
+$ docker run -p 8500:8080 aharida/spring-boot-docker
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.1.4.RELEASE)
+
+2019-05-10 11:01:43.677  INFO 1 --- [           main] com.exp.DemoApplication                  : Starting DemoApplication v0.0.1-SNAPSHOT on b83c1663cbb2 with PID 1 (/app.jar started by root in /)
+2019-05-10 11:01:43.681  INFO 1 --- [           main] com.exp.DemoApplication                  : No active profile set, falling back to default profiles: default
+2019-05-10 11:01:45.251  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-05-10 11:01:45.310  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-05-10 11:01:45.310  INFO 1 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-05-10 11:01:45.479  INFO 1 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/exp]    : Initializing Spring embedded WebApplicationContext
+2019-05-10 11:01:45.480  INFO 1 --- [           main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1740 ms
+2019-05-10 11:01:45.822  INFO 1 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-05-10 11:01:46.196  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/exp'
+2019-05-10 11:01:46.200  INFO 1 --- [           main] com.exp.DemoApplication                  : Started DemoApplication in 3.009 seconds (JVM running for 3.487)
+2019-05-10 11:02:03.715  INFO 1 --- [nio-8080-exec-4] o.a.c.c.C.[Tomcat].[localhost].[/exp]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-05-10 11:02:03.716  INFO 1 --- [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-05-10 11:02:03.722  INFO 1 --- [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+
+AHARIDAS@S0125263 MINGW64 /c/Users/aharidas/outerproj/aws/aws/springboot-docker (master)
+$ docker run -p 8500:8080 aharida/spring-boot-docker
+C:\Program Files\Docker\Docker\Resources\bin\docker.exe: Error response from daemon: driver failed programming external connectivity on endpoint nervous_chandrasekhar (a1bb20a110303487b476ce0650fcbfe072dc0b10d4f15fdbcd4560215df2d5a
+0): Bind for 0.0.0.0:8500 failed: port is already allocated.
+
+AHARIDAS@S0125263 MINGW64 /c/Users/aharidas/outerproj/aws/aws/springboot-docker (master)
+$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username:
+Error: Non-null Username Required
+
+AHARIDAS@S0125263 MINGW64 /c/Users/aharidas/outerproj/aws/aws/springboot-docker (master)
+$
+
+AHARIDAS@S0125263 MINGW64 /c/Users/aharidas/outerproj/aws/aws/springboot-docker (master)
+$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: aharida
+Password:
+Login Succeeded
+
+
+-----------------------------------------------------------------------------------------------------------------------
