@@ -1,0 +1,16 @@
+target/
+.project
+.classpath
+*.iml
+*.ipr
+*.iws
+
+**/.settings/
+.idea/*
+!.idea/saveactions_settings.xml
+!.idea/codeStyles
+**/.externalToolBuilders/
+**/MANIFEST.MF
+**/WEB-INF/classes/
+/build/
+

@@ -1,0 +1,19 @@
+server:
+  port: 8090
+
+cloud:
+  aws:
+
+    region:
+      static: eu-central-1
+      auto: false
+
+    stack:
+      auto: false
+
+    sqs:
+      url: https://sqs.eu-central-1.amazonaws.com/030686510607/aws-exp-sqs
+
+
+
+
